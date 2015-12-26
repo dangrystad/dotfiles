@@ -18,6 +18,7 @@ export JAVA_HOME=/usr/lib/jvm/java
 export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
+export PATH=$PATH:~/.gem/ruby/2.2.0/bin 
 
 # Title
 function title() {

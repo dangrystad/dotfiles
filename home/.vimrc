@@ -20,9 +20,9 @@ Plugin 'vim-scripts/Gundo'
 Plugin 'scrooloose/nerdtree'
 Plugin 'myusuf3/numbers.vim'
 Plugin 'kien/rainbow_parentheses.vim'
-"Plugin 'sbt-vim'
+Plugin 'ktvoelker/sbt-vim'
 "Plugin 'splice'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'altercation/vim-colors-solarized'
@@ -31,9 +31,10 @@ Plugin 'xolox/vim-easytags'
 Plugin 'tpope/vim-fugitive'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'xolox/vim-misc'
-"Plugin 'vim-scala'
+Plugin 'derekwyatt/vim-scala'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
+Plugin 'Shougo/neocomplete.vim'
 
 
 
@@ -43,6 +44,7 @@ filetype plugin indent on    " required
 
 
 " Use solarized colors
+syntax enable
 set background=dark
 let g:solarized_termcolors = 256
 colorscheme solarized 
@@ -87,7 +89,7 @@ set noswapfile
 set expandtab
 
 " Be smart when using tabs ;)
-set smarttab
+let g:neocomplete#enable_at_startup = 1 
 
 " 1 tab == 2 spaces
 set shiftwidth=2
