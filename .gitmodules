@@ -4,6 +4,6 @@
 [submodule "home/.zprezto"]
 	path = home/.zprezto
 	url = https://github.com/sorin-ionescu/prezto.git
-[submodule "home/.zprezto/modules/tmuxifier"]
-	path = home/.zprezto/modules/tmuxifier
+[submodule "home/.zpreztomodules/tmuxifier"]
+	path = home/.zpreztomodules/tmuxifier
 	url = https://github.com/dangrystad/tmuxifier.git
