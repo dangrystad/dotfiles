@@ -20,34 +20,48 @@ Plugin 'vim-scripts/Gundo'
 Plugin 'scrooloose/nerdtree'
 Plugin 'myusuf3/numbers.vim'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'ktvoelker/sbt-vim'
+"Plugin 'ktvoelker/sbt-vim'
 "Plugin 'splice'
-"Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
-Plugin 'bling/vim-airline'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'altercation/vim-colors-solarized'
 "Plugin 'vim-dirdiff'
 Plugin 'xolox/vim-easytags'
 Plugin 'tpope/vim-fugitive'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'xolox/vim-misc'
 Plugin 'derekwyatt/vim-scala'
-Plugin 'tpope/vim-sensible'
+"Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
-Plugin 'Shougo/neocomplete.vim'
-
-
+"Plugin 'jeetsukumaran/vim-buffergator'
+"Plugin 'tpope/vim-fireplace'
+Plugin 'iCyMind/NeoSolarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+if has("nvim")
+  " Use bar cursor in insert mode
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+  set mouse-=a
+endif
 
 " Use solarized colors
-syntax enable
+set termguicolors
 set background=dark
-let g:solarized_termcolors = 256
-colorscheme solarized 
+if has("nvim") 
+  let g:impact_transgb=1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal 
+  colorscheme NeoSolarized 
+else
+  set term=xterm
+  set t_Co=256
+  let g:solarized_termcolors = 256
+  colorscheme solarized 
+endif
 
 " line numbers
 set number
@@ -89,7 +103,7 @@ set noswapfile
 set expandtab
 
 " Be smart when using tabs ;)
-let g:neocomplete#enable_at_startup = 1 
+set smarttab
 
 " 1 tab == 2 spaces
 set shiftwidth=2
@@ -157,21 +171,21 @@ map <leader>bd :Bclose<cr>
 map <leader>ba :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers 
 try
-  set switchbuf=useopen,usetab,newtab
+  set switchbuf=useopen,setab,newtab
   set stal=2
 catch
 endtry
@@ -193,3 +207,48 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline_powerline_fonts = 1
+
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
+" Use a leader instead of the actual named binding
+nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
+
+"Switch spellcheck languages
+let g:myLang = 0
+let g:myLangList = [ "nospell", "sv", "en" ]
+function! MySpellLang()
+  "loop through languages
+  let g:myLang = g:myLang + 1
+  if g:myLang >= len(g:myLangList) | let g:myLang = 0 | endif
+  if g:myLang == 0 | set nospell | endif
+  if g:myLang == 1 | setlocal spell spelllang=sv | endif
+  if g:myLang == 2 | setlocal spell spelllang=en | endif
+  echo "language:" g:myLangList[g:myLang]
+endf
+
+map <F7> :call MySpellLang()<CR>
+imap <F7> <C-o>:call MySpellLang()<CR>
+
+" Disabling arrow keys
+noremap  <Up> ""
+noremap! <Up> <Esc>
+noremap  <Down> ""
+noremap! <Down> <Esc>
+noremap  <Left> ""
+noremap! <Left> <Esc>
+noremap  <Right> ""
+noremap! <Right> <Esc>

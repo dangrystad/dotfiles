@@ -12,13 +12,21 @@ fi
 
 # Customize to your needs...
 # SSH Completion
-zstyle -e ':completion::*:*:*:hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+#zstyle -e ':completion::*:*:*:hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
 
-export JAVA_HOME=/usr/lib/jvm/java 
+export JAVA_HOME=/usr/java/jdk1.8.0_101 
 export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
-export PATH=$PATH:~/.gem/ruby/2.2.0/bin 
+#export PATH="$HOME/.tmuxifier/bin:$PATH"
+#export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+alias vim=nvim
 
 # Title
 function title() {
